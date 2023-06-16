@@ -17,6 +17,7 @@
 x-superset-image: &superset-image apache/superset:${TAG:-latest-dev}
 x-superset-user: &superset-user root
 x-superset-depends-on: &superset-depends-on
+  - postgres
   - db
   - redis
 x-superset-volumes: &superset-volumes
@@ -155,6 +156,16 @@ services:
     volumes: *superset-volumes
     healthcheck:
       test: ["CMD-SHELL", "celery inspect ping -A superset.tasks.celery_app:app -d celery@$$HOSTNAME"]
+
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=paymentDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+
 
 volumes:
   superset_home:

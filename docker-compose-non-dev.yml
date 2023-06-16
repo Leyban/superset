@@ -16,6 +16,7 @@
 #
 x-superset-image: &superset-image apache/superset:${TAG:-latest-dev}
 x-superset-depends-on: &superset-depends-on
+  - postgres
   - db
   - redis
 x-superset-volumes: &superset-volumes
@@ -86,6 +87,15 @@ services:
     volumes: *superset-volumes
     healthcheck:
       disable: true
+
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=paymentDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
 
 volumes:
   superset_home:

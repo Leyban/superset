@@ -43,7 +43,7 @@ def get_env_variable(var_name: str, default: Optional[str] = None) -> str:
             )
             raise OSError(error_msg)
 
-
+SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'postgresql+psycopg2://postgres:secret@host.docker.internal:5432/paymentDB'
 DATABASE_DIALECT = get_env_variable("DATABASE_DIALECT")
 DATABASE_USER = get_env_variable("DATABASE_USER")
 DATABASE_PASSWORD = get_env_variable("DATABASE_PASSWORD")
